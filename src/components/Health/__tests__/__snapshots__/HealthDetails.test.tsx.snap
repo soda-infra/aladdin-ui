@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HealthDetails renders deployments failure 1`] = `
+<div
+  key="0"
+>
+  <strong>
+    <span
+      style={
+        Object {
+          "color": "#72767b",
+        }
+      }
+    >
+      N/A
+    </span>
+     Error Rate over last 1m: 
+  </strong>
+  No requests
+</div>
+`;
+
+exports[`HealthDetails renders healthy 1`] = `
+<div
+  key="0"
+>
+  <strong>
+    <span
+      style={
+        Object {
+          "color": "#72767b",
+        }
+      }
+    >
+      N/A
+    </span>
+     Error Rate over last 1m: 
+  </strong>
+  No requests
+</div>
+`;
