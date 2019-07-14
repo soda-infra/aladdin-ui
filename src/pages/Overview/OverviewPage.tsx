@@ -45,6 +45,8 @@ import { nsWideMTLSStatus } from '../../types/TLSStatus';
 import { switchType } from './OverviewHelper';
 import * as Sorts from './Sorts';
 import * as Filters from './Filters';
+import { GridGenerator, HexGrid, Layout, Hexagon } from 'react-hexgrid';
+import '../../styles/App.css';
 
 const cardGridStyle = style({ width: '100%' });
 
@@ -289,8 +291,18 @@ export class OverviewPage extends React.Component<OverviewProps, State> {
   render() {
     const [xs, sm, md] = this.state.displayMode === OverviewDisplayMode.COMPACT ? [6, 3, 3] : [12, 6, 4];
     const filteredNamespaces = Filters.filterBy(this.state.namespaces, FilterSelected.getSelected());
+    const moreHexas = GridGenerator.hexagon_aladdin(3);
     return (
       <>
+
+     <div className="App">
+        <HexGrid width={1200} height={200} viewBox="-10 -10 20 20">
+          <Layout size={{ x: 2, y: 2 }} flat={false} spacing={1.02} origin={{ x: 0, y: 0 }}>
+            {moreHexas.map( (hex, i) => <Hexagon key={i} q={hex.q} r={hex.r} s={hex.s} /> )}
+          </Layout>
+        </HexGrid>
+      </div>
+
         <Breadcrumb title={true}>
           <Breadcrumb.Item active={true}>Namespaces</Breadcrumb.Item>
         </Breadcrumb>

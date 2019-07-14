@@ -213,6 +213,7 @@ class WorkloadDetails extends React.Component<WorkloadDetailsPageProps, Workload
               <NavItem eventKey="logs">Logs</NavItem>
               <NavItem eventKey="in_metrics">Inbound Metrics</NavItem>
               <NavItem eventKey="out_metrics">Outbound Metrics</NavItem>
+              <NavItem eventKey="hello_metrics">Hello</NavItem>
               {isLabeled &&
                 this.state.workload.runtimes.map(runtime => {
                   return runtime.dashboardRefs.map(dashboard => {
@@ -255,6 +256,14 @@ class WorkloadDetails extends React.Component<WorkloadDetailsPageProps, Workload
                 )}
               </TabPane>
               <TabPane eventKey="in_metrics" mountOnEnter={true} unmountOnExit={true}>
+                <IstioMetricsContainer
+                  namespace={this.props.match.params.namespace}
+                  object={this.props.match.params.workload}
+                  objectType={MetricsObjectTypes.WORKLOAD}
+                  direction={'inbound'}
+                />
+              </TabPane>
+              <TabPane eventKey="hello_metrics" mountOnEnter={true} unmountOnExit={true}>
                 <IstioMetricsContainer
                   namespace={this.props.match.params.namespace}
                   object={this.props.match.params.workload}
