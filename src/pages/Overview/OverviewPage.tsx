@@ -292,17 +292,9 @@ export class OverviewPage extends React.Component<OverviewProps, State> {
     const [xs, sm, md] = this.state.displayMode === OverviewDisplayMode.COMPACT ? [6, 3, 3] : [12, 6, 4];
     const filteredNamespaces = Filters.filterBy(this.state.namespaces, FilterSelected.getSelected());
     const moreHexas = GridGenerator.hexagon_aladdin(3);
+    console.log(filteredNamespaces);
     return (
       <>
-
-     <div className="App">
-        <HexGrid width={1200} height={200} viewBox="-10 -10 20 20">
-          <Layout size={{ x: 2, y: 2 }} flat={false} spacing={1.02} origin={{ x: 0, y: 0 }}>
-            {moreHexas.map( (hex, i) => <Hexagon key={i} q={hex.q} r={hex.r} s={hex.s} /> )}
-          </Layout>
-        </HexGrid>
-      </div>
-
         <Breadcrumb title={true}>
           <Breadcrumb.Item active={true}>Namespaces</Breadcrumb.Item>
         </Breadcrumb>
@@ -313,6 +305,26 @@ export class OverviewPage extends React.Component<OverviewProps, State> {
           displayMode={this.state.displayMode}
           setDisplayMode={this.setDisplayMode}
         />
+        {filteredNamespaces.map(ns => {
+          return (
+     <Col xs={xs} sm={sm} md={md} key={ns.name}>
+        <p>{ns.name}</p>
+        <HexGrid width={400} height={200} viewBox="-10 -10 20 20">
+          <Layout size={{ x: 2, y: 2 }} flat={false} spacing={1.02} origin={{ x: 0, y: 0 }}>
+            {moreHexas.map( (hex, i) => <Hexagon key={i} q={hex.q} r={hex.r} s={hex.s} /> )}
+          </Layout>
+        </HexGrid>
+      </Col>
+          );
+
+        })}
+     <div className="App">
+        <HexGrid width={1200} height={200} viewBox="-10 -10 20 20">
+          <Layout size={{ x: 2, y: 2 }} flat={false} spacing={1.02} origin={{ x: 0, y: 0 }}>
+            {moreHexas.map( (hex, i) => <Hexagon key={i} q={hex.q} r={hex.r} s={hex.s} /> )}
+          </Layout>
+        </HexGrid>
+      </div>
         {filteredNamespaces.length > 0 ? (
           <div className="cards-pf">
             <CardGrid matchHeight={true} className={cardGridStyle}>
