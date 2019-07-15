@@ -35,6 +35,7 @@ import NamespaceInfo, { NamespaceStatus } from './NamespaceInfo';
 import OverviewCardContent from './OverviewCardContent';
 import NamespaceMTLSStatusContainer from '../../components/MTls/NamespaceMTLSStatus';
 import OverviewCardContentExpanded from './OverviewCardContentExpanded';
+import OverviewCardContentCustom from './OverviewCardContentCustom';
 import { IstioMetricsOptions } from '../../types/MetricsOptions';
 import { computePrometheusRateParams } from '../../services/Prometheus';
 import OverviewCardLinks from './OverviewCardLinks';
@@ -45,7 +46,7 @@ import { nsWideMTLSStatus } from '../../types/TLSStatus';
 import { switchType } from './OverviewHelper';
 import * as Sorts from './Sorts';
 import * as Filters from './Filters';
-import { GridGenerator, HexGrid, Layout, Hexagon } from 'react-hexgrid';
+// import { GridGenerator, HexGrid, Layout, Hexagon } from 'react-hexgrid';
 import '../../styles/App.css';
 
 const cardGridStyle = style({ width: '100%' });
@@ -72,6 +73,7 @@ type OverviewProps = ReduxProps & {};
 export class OverviewPage extends React.Component<OverviewProps, State> {
   private promises = new PromisesRegistry();
   private displayModeSet = false;
+  // private moreHexas = GridGenerator.hexagon_aladdin(3);
 
   constructor(props: OverviewProps) {
     super(props);
@@ -291,7 +293,7 @@ export class OverviewPage extends React.Component<OverviewProps, State> {
   render() {
     const [xs, sm, md] = this.state.displayMode === OverviewDisplayMode.COMPACT ? [6, 3, 3] : [12, 6, 4];
     const filteredNamespaces = Filters.filterBy(this.state.namespaces, FilterSelected.getSelected());
-    const moreHexas = GridGenerator.hexagon_aladdin(3);
+    // const moreHexas = GridGenerator.hexagon_aladdin(3);
     console.log(filteredNamespaces);
     return (
       <>
@@ -305,26 +307,42 @@ export class OverviewPage extends React.Component<OverviewProps, State> {
           displayMode={this.state.displayMode}
           setDisplayMode={this.setDisplayMode}
         />
-        {filteredNamespaces.map(ns => {
+        <div className="cards-pf">
+            <CardGrid matchHeight={true} className={cardGridStyle}>
+              <Row style={{ marginBottom: '20px', marginTop: '20px' }}>
+              {filteredNamespaces.map(ns => {
           return (
      <Col xs={xs} sm={sm} md={md} key={ns.name}>
-        <p>{ns.name}</p>
-        <HexGrid width={400} height={200} viewBox="-10 -10 20 20">
+        {/* {this.renderStatus(ns)} */}
+        <Card matchHeight={true} accented={true} aggregated={true}>
+        <CardTitle>
+                          {ns.tlsStatus ? <NamespaceMTLSStatusContainer status={ns.tlsStatus.status} /> : undefined}
+                          {ns.name}
+                        </CardTitle>
+          <CardBody>
+        {this.renderStatus(ns)}
+        </CardBody>
+        {/* <HexGrid width={400} height={200} viewBox="-10 -10 20 20">
           <Layout size={{ x: 2, y: 2 }} flat={false} spacing={1.02} origin={{ x: 0, y: 0 }}>
-            {moreHexas.map( (hex, i) => <Hexagon key={i} q={hex.q} r={hex.r} s={hex.s} /> )}
+            {this.moreHexas.map( (hex, i) => <Hexagon key={i} q={hex.q} r={hex.r} s={hex.s} /> )}
           </Layout>
-        </HexGrid>
+        </HexGrid> */}
+        </Card>
       </Col>
           );
 
         })}
-     <div className="App">
+              </Row>
+            </CardGrid>
+          </div>
+        
+     {/* <div className="App">
         <HexGrid width={1200} height={200} viewBox="-10 -10 20 20">
           <Layout size={{ x: 2, y: 2 }} flat={false} spacing={1.02} origin={{ x: 0, y: 0 }}>
-            {moreHexas.map( (hex, i) => <Hexagon key={i} q={hex.q} r={hex.r} s={hex.s} /> )}
+            {this.moreHexas.map( (hex, i) => <Hexagon key={i} q={hex.q} r={hex.r} s={hex.s} /> )}
           </Layout>
         </HexGrid>
-      </div>
+      </div> */}
         {filteredNamespaces.length > 0 ? (
           <div className="cards-pf">
             <CardGrid matchHeight={true} className={cardGridStyle}>
@@ -378,6 +396,35 @@ export class OverviewPage extends React.Component<OverviewProps, State> {
     }
     return <div style={{ height: 70 }} />;
   }
+  renderStatus(ns: NamespaceInfo): JSX.Element {
+    if (ns.status) {
+      if (this.state.displayMode === OverviewDisplayMode.COMPACT) {
+        return <OverviewCardContent key={ns.name} name={ns.name} status={ns.status} type={this.state.type} />;
+      }
+      return (
+        <OverviewCardContentCustom
+          key={ns.name}
+          name={ns.name}
+          duration={ListPagesHelper.currentDuration()}
+          status={ns.status}
+          type={this.state.type}
+          metrics={ns.metrics}
+        />
+      );
+    }
+    return <div style={{ height: 70 }} />;
+  }
+  // input_hexagon_aladdin(ns: NamespaceInfo): JSX.Element {
+  //   if (ns.status) {
+  //     if (this.state.displayMode === OverviewDisplayMode.COMPACT) {
+  //       return <OverviewCardContent key={ns.name} name={ns.name} status={ns.status} type={this.state.type} />;
+  //     }
+  //     return (
+  //       this.moreHexas = GridGenerator.hexagon_aladdin(this.renderStatus(ns))
+  //     );
+  //   }
+  //   return <div style={{ height: 70 }} />;
+  // }
 }
 
 const mapStateToProps = (state: KialiAppState) => ({

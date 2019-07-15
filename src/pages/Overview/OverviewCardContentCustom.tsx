@@ -2,12 +2,9 @@ import * as React from 'react';
 import {
   AggregateStatusNotification,
   AggregateStatusNotifications,
-  StackedBarChart,
   SparklineChart
 } from 'patternfly-react';
 import { Link } from 'react-router-dom';
-import { DEGRADED, FAILURE, HEALTHY } from '../../types/Health';
-import OverviewStatus from './OverviewStatus';
 import { OverviewType } from './OverviewToolbar';
 import { NamespaceStatus } from './NamespaceInfo';
 import { switchType } from './OverviewHelper';
@@ -16,6 +13,8 @@ import { TimeSeries } from '../../types/Metrics';
 import graphUtils from '../../utils/Graphing';
 import { DurationInSeconds } from '../../types/Common';
 import { getName } from '../../utils/RateIntervals';
+import { GridGenerator, HexGrid, Layout, Hexagon } from 'react-hexgrid';
+import '../../styles/App.css';
 
 type Props = {
   name: string;
@@ -26,22 +25,19 @@ type Props = {
 };
 
 class OverviewCardContentExpanded extends React.Component<Props> {
+  private moreHexas = GridGenerator.hexagon_aladdin(3);
   render() {
+    this.moreHexas = GridGenerator.hexagon_aladdin(this.props.status.inSuccess.length);
     return (
-      <>
-        <div style={{ width: '50%', display: 'inline-block', height: 90 }}>{this.renderLeft()}</div>
-        <div
-          style={{
-            width: '50%',
-            display: 'inline-block',
-            height: 90,
-            borderLeft: '1px solid #d1d1d1',
-            paddingLeft: 10,
-            verticalAlign: 'top'
-          }}
-        >
-          {this.renderRight()}
+      <><div>
+        <HexGrid width={400} height={200} viewBox="-10 -10 20 20">
+          <Layout size={{ x: 2, y: 2 }} flat={false} spacing={1.02} origin={{ x: 0, y: 0 }}>
+            {this.moreHexas.map( (hex, i) => <Hexagon key={i} q={hex.q} r={hex.r} s={hex.s} /> )}
+          </Layout>
+        </HexGrid>
         </div>
+        <div>{this.renderLeft()}</div>
+        
       </>
     );
   }
@@ -72,57 +68,7 @@ class OverviewCardContentExpanded extends React.Component<Props> {
     }
     return (
       <>
-        {mainLink}
-        <StackedBarChart
-          style={{ paddingLeft: 13 }}
-          id={'card-barchart-' + name}
-          size={{ height: 50 }}
-          axis={{ rotated: true, x: { show: false, categories: ['Health'], type: 'category' }, y: { show: false } }}
-          grid={{ x: { show: false }, y: { show: false } }}
-          tooltip={{ show: false }}
-          data={{
-            groups: [[FAILURE.name, DEGRADED.name, HEALTHY.name]],
-            columns: [
-              [FAILURE.name, status.inError.length],
-              [DEGRADED.name, status.inWarning.length],
-              [HEALTHY.name, status.inSuccess.length]
-            ],
-            order: null,
-            type: 'bar'
-          }}
-          color={{ pattern: [FAILURE.color, DEGRADED.color, HEALTHY.color] }}
-          bar={{ width: 20 }}
-          legend={{ hide: true }}
-        />
-        <AggregateStatusNotifications style={{ marginTop: -20, position: 'relative' }}>
-          {status.inError.length > 0 && (
-            <OverviewStatus
-              id={name + '-failure'}
-              namespace={name}
-              status={FAILURE}
-              items={status.inError}
-              targetPage={targetPage}
-            />
-          )}
-          {status.inWarning.length > 0 && (
-            <OverviewStatus
-              id={name + '-degraded'}
-              namespace={name}
-              status={DEGRADED}
-              items={status.inWarning}
-              targetPage={targetPage}
-            />
-          )}
-          {status.inSuccess.length > 0 && (
-            <OverviewStatus
-              id={name + '-healthy'}
-              namespace={name}
-              status={HEALTHY}
-              items={status.inSuccess}
-              targetPage={targetPage}
-            />
-          )}
-        </AggregateStatusNotifications>
+        {nbItems}
       </>
     );
   }
