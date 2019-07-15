@@ -26,8 +26,10 @@ type Props = {
 
 class OverviewCardContentExpanded extends React.Component<Props> {
   private moreHexas = GridGenerator.hexagon_aladdin(3);
+  private count;
   render() {
-    this.moreHexas = GridGenerator.hexagon_aladdin(this.props.status.inSuccess.length);
+    this.count = this.props.status.inError.length + this.props.status.inWarning.length + this.props.status.inSuccess.length + this.props.status.notAvailable.length;
+    this.moreHexas = GridGenerator.hexagon_aladdin(this.count);
     return (
       <><div>
         <HexGrid width={400} height={200} viewBox="-10 -10 20 20">
