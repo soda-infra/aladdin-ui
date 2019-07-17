@@ -52,7 +52,6 @@ class OverviewCardContentExpanded extends React.Component<Props> {
     const status = this.props.status;
     const nbItems =
       status.inError.length + status.inWarning.length + status.inSuccess.length + status.notAvailable.length;
-    console.log(nbItems);
     let text: string;
     if (nbItems === 1) {
       text = switchType(this.props.type, '1 Application', '1 Service', '1 Workload');

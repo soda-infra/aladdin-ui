@@ -73,6 +73,7 @@ type OverviewProps = ReduxProps & {};
 export class OverviewPage extends React.Component<OverviewProps, State> {
   private promises = new PromisesRegistry();
   private displayModeSet = false;
+  private filteredNamespaces;
   // private moreHexas = GridGenerator.hexagon_aladdin(3);
 
   constructor(props: OverviewProps) {
@@ -292,9 +293,8 @@ export class OverviewPage extends React.Component<OverviewProps, State> {
 
   render() {
     const [xs, sm, md] = this.state.displayMode === OverviewDisplayMode.COMPACT ? [6, 3, 3] : [12, 6, 4];
-    const filteredNamespaces = Filters.filterBy(this.state.namespaces, FilterSelected.getSelected());
-    // const moreHexas = GridGenerator.hexagon_aladdin(3);
-    console.log(filteredNamespaces);
+    this.filteredNamespaces = Filters.filterBy(this.state.namespaces, FilterSelected.getSelected());
+
     return (
       <>
         <Breadcrumb title={true}>
@@ -310,7 +310,7 @@ export class OverviewPage extends React.Component<OverviewProps, State> {
         <div className="cards-pf">
             <CardGrid matchHeight={true} className={cardGridStyle}>
               <Row style={{ marginBottom: '20px', marginTop: '20px' }}>
-              {filteredNamespaces.map(ns => {
+              {this.filteredNamespaces.map(ns => {
           return (
      <Col xs={xs} sm={sm} md={md} key={ns.name}>
         {/* {this.renderStatus(ns)} */}
@@ -322,11 +322,7 @@ export class OverviewPage extends React.Component<OverviewProps, State> {
           <CardBody>
         {this.renderStatus(ns)}
         </CardBody>
-        {/* <HexGrid width={400} height={200} viewBox="-10 -10 20 20">
-          <Layout size={{ x: 2, y: 2 }} flat={false} spacing={1.02} origin={{ x: 0, y: 0 }}>
-            {this.moreHexas.map( (hex, i) => <Hexagon key={i} q={hex.q} r={hex.r} s={hex.s} /> )}
-          </Layout>
-        </HexGrid> */}
+
         </Card>
       </Col>
           );
@@ -336,18 +332,11 @@ export class OverviewPage extends React.Component<OverviewProps, State> {
             </CardGrid>
           </div>
         
-     {/* <div className="App">
-        <HexGrid width={1200} height={200} viewBox="-10 -10 20 20">
-          <Layout size={{ x: 2, y: 2 }} flat={false} spacing={1.02} origin={{ x: 0, y: 0 }}>
-            {this.moreHexas.map( (hex, i) => <Hexagon key={i} q={hex.q} r={hex.r} s={hex.s} /> )}
-          </Layout>
-        </HexGrid>
-      </div> */}
-        {filteredNamespaces.length > 0 ? (
+        {this.filteredNamespaces.length > 0 ? (
           <div className="cards-pf">
             <CardGrid matchHeight={true} className={cardGridStyle}>
               <Row style={{ marginBottom: '20px', marginTop: '20px' }}>
-                {filteredNamespaces.map(ns => {
+                {this.filteredNamespaces.map(ns => {
                   return (
                     <Col xs={xs} sm={sm} md={md} key={ns.name}>
                       <Card matchHeight={true} accented={true} aggregated={true}>
@@ -409,22 +398,13 @@ export class OverviewPage extends React.Component<OverviewProps, State> {
           status={ns.status}
           type={this.state.type}
           metrics={ns.metrics}
+          namespaceList={this.filteredNamespaces}
         />
       );
     }
     return <div style={{ height: 70 }} />;
   }
-  // input_hexagon_aladdin(ns: NamespaceInfo): JSX.Element {
-  //   if (ns.status) {
-  //     if (this.state.displayMode === OverviewDisplayMode.COMPACT) {
-  //       return <OverviewCardContent key={ns.name} name={ns.name} status={ns.status} type={this.state.type} />;
-  //     }
-  //     return (
-  //       this.moreHexas = GridGenerator.hexagon_aladdin(this.renderStatus(ns))
-  //     );
-  //   }
-  //   return <div style={{ height: 70 }} />;
-  // }
+
 }
 
 const mapStateToProps = (state: KialiAppState) => ({
