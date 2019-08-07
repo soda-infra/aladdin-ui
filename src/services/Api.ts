@@ -2,8 +2,8 @@ import axios, { AxiosError } from 'axios';
 import { DashboardModel, DashboardQuery } from 'k-charted-react';
 
 import Namespace from '../types/Namespace';
-import { IstioMetricsOptions } from '../types/MetricsOptions';
-import { Metrics } from '../types/Metrics';
+import { IstioMetricsOptions, InfraMetricsOptions } from '../types/MetricsOptions';
+import { Metrics, InfraMetrics } from '../types/Metrics';
 import { IstioConfigDetails } from '../types/IstioConfigDetails';
 import { IstioConfigList } from '../types/IstioConfigList';
 import { Workload, WorkloadNamespaceResponse } from '../types/Workload';
@@ -107,6 +107,11 @@ export const getNamespaces = () => {
 
 export const getNamespaceMetrics = (namespace: string, params: IstioMetricsOptions) => {
   return newRequest<Readonly<Metrics>>(HTTP_VERBS.GET, urls.namespaceMetrics(namespace), params, {});
+};
+
+// aladdin
+export const getInfraMetrics = (params: InfraMetricsOptions) => {
+  return newRequest<Readonly<InfraMetrics>>(HTTP_VERBS.GET, urls.infra, params, {});
 };
 
 export const getMeshTls = () => {

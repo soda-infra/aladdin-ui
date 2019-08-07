@@ -1,0 +1,191 @@
+Looking for git in: git
+Using git 2.17.1 from git
+> git rev-parse --show-toplevel
+> git rev-parse --git-dir
+> git config --get commit.template
+Open repository: /source/kiali/kiali-ui
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+Failed to watch ref '/source/kiali/kiali-ui/.git/refs/remotes/origin/master'. Ref is most likely packed.
+> git check-ignore -v -z --stdin
+> git check-ignore -v -z --stdin
+> git check-ignore -v -z --stdin
+> git check-ignore -v -z --stdin
+> git check-ignore -v -z --stdin
+> git check-ignore -v -z --stdin
+> git check-ignore -v -z --stdin
+> git show :src/pages/Overview/OverviewPage.tsx
+> git show :src/pages/Overview/OverviewCardContentCustom.tsx
+> git ls-files --stage -- src/pages/Overview/
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+Failed to watch ref '/source/kiali/kiali-ui/.git/refs/remotes/origin/master'. Ref is most likely packed.
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+Failed to watch ref '/source/kiali/kiali-ui/.git/refs/remotes/origin/master'. Ref is most likely packed.
+> git check-ignore -v -z --stdin
+> git check-ignore -v -z --stdin
+> git check-ignore -v -z --stdin
+> git check-ignore -v -z --stdin
+> git check-ignore -v -z --stdin
+> git check-ignore -v -z --stdin
+> git check-ignore -v -z --stdin
+> git check-ignore -v -z --stdin
+> git check-ignore -v -z --stdin
+> git check-ignore -v -z --stdin
+> git check-ignore -v -z --stdin
+> git show :node_modules/react-hexgrid/lib/Hexagon/Hexagon.js
+> git ls-files --stage -- node_modules/react-hexgrid/lib/Hexagon/
+> git check-ignore -v -z --stdin
+> git show :node_modules/react-hexgrid/lib/GridGenerator.js
+> git ls-files --stage -- node_modules/react-hexgrid/lib/
+> git show :src/pages/Overview/OverviewCardContentCustom.tsx
+> git ls-files --stage -- src/pages/Overview/
+> git check-ignore -v -z --stdin
+> git check-ignore -v -z --stdin
+> git check-ignore -v -z --stdin
+> git check-ignore -v -z --stdin
+> git check-ignore -v -z --stdin
+> git show :node_modules/react-hexgrid/lib/Hexagon.js
+> git ls-files --stage -- node_modules/react-hexgrid/lib/
+> git check-ignore -v -z --stdin
+> git show :node_modules/react-hexgrid/lib/Hexagon/Hexagon.js
+> git ls-files --stage -- node_modules/react-hexgrid/lib/Hexagon/
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+Failed to watch ref '/source/kiali/kiali-ui/.git/refs/remotes/origin/master'. Ref is most likely packed.
+> git show :src/pages/Overview/OverviewCardContentCustom.tsx
+> git ls-files --stage -- src/pages/Overview/
+> git check-ignore -v -z --stdin
+> git check-ignore -v -z --stdin
+> git check-ignore -v -z --stdin
+> git check-ignore -v -z --stdin
+> git show :src/styles/App.css
+> git ls-files --stage -- src/styles/
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+Failed to watch ref '/source/kiali/kiali-ui/.git/refs/remotes/origin/master'. Ref is most likely packed.
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+Failed to watch ref '/source/kiali/kiali-ui/.git/refs/remotes/origin/master'. Ref is most likely packed.
+> git show :node_modules/react-hexgrid/lib/Hexagon.js
+> git ls-files --stage -- node_modules/react-hexgrid/lib/
+> git show :src/styles/App.css
+> git ls-files --stage -- src/styles/
+> git show :src/pages/Overview/OverviewPage.tsx
+> git show :src/pages/Overview/OverviewCardContentCustom.tsx
+> git ls-files --stage -- src/pages/Overview/
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+Failed to watch ref '/source/kiali/kiali-ui/.git/refs/remotes/origin/master'. Ref is most likely packed.
+> git show :src/styles/App.css
+> git ls-files --stage -- src/styles/
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+Failed to watch ref '/source/kiali/kiali-ui/.git/refs/remotes/origin/master'. Ref is most likely packed.
+> git show :src/pages/Overview/OverviewCardContentCustom.tsx
+> git ls-files --stage -- src/pages/Overview/
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+Failed to watch ref '/source/kiali/kiali-ui/.git/refs/remotes/origin/master'. Ref is most likely packed.
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+Failed to watch ref '/source/kiali/kiali-ui/.git/refs/remotes/origin/master'. Ref is most likely packed.
+> git show :src/styles/App.css
+> git ls-files --stage -- src/styles/
+> git show :src/pages/Overview/OverviewCardContentCustom.tsx
+> git ls-files --stage -- src/pages/Overview/
+> git check-ignore -v -z --stdin
+> git check-ignore -v -z --stdin
+> git show :src/types/Health.ts
+> git show :src/pages/Overview/OverviewPage.tsx
+> git check-ignore -v -z --stdin
+> git show :src/services/Api.ts
+> git show :src/pages/Overview/OverviewPage.tsx
+> git show :src/services/Api.ts
+> git show :src/pages/Overview/OverviewPage.tsx
+> git show :src/services/Api.ts
+> git show :src/pages/Overview/OverviewPage.tsx
+> git show :src/services/Api.ts
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+Failed to watch ref '/source/kiali/kiali-ui/.git/refs/remotes/origin/master'. Ref is most likely packed.
+> git check-ignore -v -z --stdin
+> git check-ignore -v -z --stdin
+> git check-ignore -v -z --stdin
+> git show :src/pages/Overview/OverviewPage.tsx
+> git show :src/styles/App.css
+> git ls-files --stage -- src/styles/
+> git show :src/services/Api.ts
+> git check-ignore -v -z --stdin
+> git show :src/styles/App.css
+> git ls-files --stage -- src/styles/
+> git show :node_modules/react-hexgrid/lib/Hexagon.js
+> git ls-files --stage -- node_modules/react-hexgrid/lib/
+> git show :node_modules/react-hexgrid/lib/Hexagon/Hexagon.js
+> git ls-files --stage -- node_modules/react-hexgrid/lib/Hexagon/
+> git show :node_modules/react-hexgrid/lib/Hexagon.js
+> git ls-files --stage -- node_modules/react-hexgrid/lib/
+> git show :src/styles/App.css
+> git ls-files --stage -- src/styles/
+> git show :src/services/Api.ts
+> git show :src/pages/Overview/OverviewPage.tsx
+> git show :src/pages/Overview/OverviewCardContentCustom.tsx
+> git ls-files --stage -- src/pages/Overview/
+> git show :src/pages/Overview/OverviewPage.tsx
+> git show :src/services/Api.ts

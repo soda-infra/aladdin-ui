@@ -9,3 +9,9 @@ export interface Path {
   path: string;
   component: any;
 }
+
+// aladdin
+export interface DashboardItem {
+  title: string;
+  kind: string;
+}

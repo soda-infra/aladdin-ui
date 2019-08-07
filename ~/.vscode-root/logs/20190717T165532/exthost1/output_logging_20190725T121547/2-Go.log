@@ -1,0 +1,39 @@
+Starting linting the current package at /source/kiali/kiali/src/github.com/kiali/kiali/graph/telemetry/istio/appender
+Starting "go vet" under the folder /source/kiali/kiali/src/github.com/kiali/kiali/graph/telemetry/istio/appender
+Starting building the current package at /source/kiali/kiali/src/github.com/kiali/kiali/graph/telemetry/istio/appender
+Not able to determine import path of current package by using cwd: /source/kiali/kiali/src/github.com/kiali/kiali/graph/telemetry/istio/appender and Go workspace: 
+/source/kiali/kiali/src/github.com/kiali/kiali/graph/telemetry/istio/appender>Finished running tool: /home/soda/go/bin/golint
+/source/kiali/kiali/src/github.com/kiali/kiali/graph/telemetry/istio/appender/appender.go:18: exported function ParseAppenders should have comment or be unexported
+/source/kiali/kiali/src/github.com/kiali/kiali/graph/telemetry/istio/appender/appender.go:183: exported function IncludeIstio should have comment or be unexported
+/source/kiali/kiali/src/github.com/kiali/kiali/graph/telemetry/istio/appender/dead_node.go:7: exported const DeadNodeAppenderName should have comment or be unexported
+/source/kiali/kiali/src/github.com/kiali/kiali/graph/telemetry/istio/appender/dead_node_test.go:112: var unknownId should be unknownID
+/source/kiali/kiali/src/github.com/kiali/kiali/graph/telemetry/istio/appender/dead_node_test.go:118: var ingressId should be ingressID
+/source/kiali/kiali/src/github.com/kiali/kiali/graph/telemetry/istio/appender/istio_details.go:11: exported const IstioAppenderName should have comment or be unexported
+/source/kiali/kiali/src/github.com/kiali/kiali/graph/telemetry/istio/appender/istio_details_test.go:68: var appNodeId should be appNodeID
+/source/kiali/kiali/src/github.com/kiali/kiali/graph/telemetry/istio/appender/istio_details_test.go:68: var svcNodeId should be svcNodeID
+/source/kiali/kiali/src/github.com/kiali/kiali/graph/telemetry/istio/appender/istio_details_test.go:68: var wlNodeId should be wlNodeID
+/source/kiali/kiali/src/github.com/kiali/kiali/graph/telemetry/istio/appender/istio_details_test.go:129: var appNodeId should be appNodeID
+/source/kiali/kiali/src/github.com/kiali/kiali/graph/telemetry/istio/appender/istio_details_test.go:129: var svcNodeId should be svcNodeID
+/source/kiali/kiali/src/github.com/kiali/kiali/graph/telemetry/istio/appender/istio_details_test.go:129: var wlNodeId should be wlNodeID
+/source/kiali/kiali/src/github.com/kiali/kiali/graph/telemetry/istio/appender/istio_details_test.go:200: var appNodeId should be appNodeID
+/source/kiali/kiali/src/github.com/kiali/kiali/graph/telemetry/istio/appender/istio_details_test.go:200: var svcNodeId should be svcNodeID
+/source/kiali/kiali/src/github.com/kiali/kiali/graph/telemetry/istio/appender/istio_details_test.go:200: var wlNodeId should be wlNodeID
+/source/kiali/kiali/src/github.com/kiali/kiali/graph/telemetry/istio/appender/istio_details_test.go:200: var fooSvcNodeId should be fooSvcNodeID
+/source/kiali/kiali/src/github.com/kiali/kiali/graph/telemetry/istio/appender/security_policy.go:16: exported const SecurityPolicyAppenderName should have comment (or a comment on this block) or be unexported
+/source/kiali/kiali/src/github.com/kiali/kiali/graph/telemetry/istio/appender/security_policy.go:31: exported type PolicyRates should have comment or be unexported
+/source/kiali/kiali/src/github.com/kiali/kiali/graph/telemetry/istio/appender/security_policy.go:139: var sourceId should be sourceID
+/source/kiali/kiali/src/github.com/kiali/kiali/graph/telemetry/istio/appender/security_policy.go:140: var destId should be destID
+/source/kiali/kiali/src/github.com/kiali/kiali/graph/telemetry/istio/appender/security_policy_test.go:61: var ingressId should be ingressID
+/source/kiali/kiali/src/github.com/kiali/kiali/graph/telemetry/istio/appender/security_policy_test.go:128: var ingressId should be ingressID
+/source/kiali/kiali/src/github.com/kiali/kiali/graph/telemetry/istio/appender/service_entry.go:11: exported const ServiceEntryAppenderName should have comment or be unexported
+/source/kiali/kiali/src/github.com/kiali/kiali/graph/telemetry/istio/appender/sidecars_check.go:8: exported const SidecarsCheckAppenderName should have comment or be unexported
+/source/kiali/kiali/src/github.com/kiali/kiali/graph/telemetry/istio/appender/unused_node.go:10: exported const UnusedNodeAppenderName should have comment or be unexported
+
+/source/kiali/kiali/src/github.com/kiali/kiali/graph/telemetry/istio/appender>Finished running tool: /snap/bin/go build -i -o /tmp/vscode-goPYCo5y/go-code-check .
+/source/kiali/kiali/src/github.com/kiali/kiali/graph/telemetry/istio/appender/util.go:11: cannot find package "github.com/prometheus/client_golang/api/prometheus/v1" in any of:
+/source/kiali/kiali/src/github.com/kiali/kiali/graph/telemetry/istio/appender/response_time.go:8: cannot find package "github.com/prometheus/common/model" in any of:
+
+/source/kiali/kiali/src/github.com/kiali/kiali/graph/telemetry/istio/appender>Finished running tool: /snap/bin/go vet ./...
+/source/kiali/kiali/src/github.com/kiali/kiali/graph/telemetry/istio/appender/util.go:11: cannot find package "github.com/prometheus/client_golang/api/prometheus/v1" in any of:
+/source/kiali/kiali/src/github.com/kiali/kiali/graph/telemetry/istio/appender/response_time.go:8: cannot find package "github.com/prometheus/common/model" in any of:
+
