@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { style } from 'typestyle';
 import { InfraMetricsOptions } from '../../../src/types/MetricsOptions';
 import * as API from '../../services/Api';
 import { CancelablePromise, makeCancelablePromise } from '../../utils/CancelablePromises';
@@ -12,11 +13,17 @@ import {
   CardBody
 } from 'patternfly-react';
 import update from 'react-addons-update';
+import { DashboardPropType } from '../../types/Dashboard';
 
-// jungeun
-type Props = {
-  name: string[];
-};
+const cardTitleStyle = style({ 
+  fontSize: '25px',
+  fontWeight: 600
+});
+
+const cardBodyStyle = style({
+  fontSize: '35px',
+  fontWeight: 'bold'
+});
 
 type State = {
   node: string[];
@@ -26,10 +33,10 @@ type State = {
   namespaceActive: number;
 };
 
-class CardK8sCluster extends React.Component<Props, State> {
+class CardK8sCluster extends React.Component<DashboardPropType, State> {
   private metricsPromise?: CancelablePromise<Response<InfraMetrics>>;
 
-  constructor(props: Props) {
+  constructor(props: DashboardPropType) {
     super(props);
     this.state = {
       node: [],
@@ -42,8 +49,13 @@ class CardK8sCluster extends React.Component<Props, State> {
   componentWillMount() {
     this.load();
   }
+  
+  componentDidMount(){
+    window.setInterval(this.load, 15000);
+  }
 
-  // kch TODO: filters 줄이기, 실행중 업데이트 되는가 확인해보기
+  componentWillUpdate(){}
+  // kch TODO: filters 줄이기
   load = () => {
     const optionsTotalnodes: InfraMetricsOptions = {
       filters: ['node_labels'],
@@ -176,16 +188,16 @@ class CardK8sCluster extends React.Component<Props, State> {
   }
   
   render() {
-    const [xs, sm, md] = [12, 6, 3];
+    const [sm, md] = [12, 6];
     return (
       this.props.name.map(name => {
         return (
-          <Col xs={xs} sm={sm} md={md} key={name}>
+          <Col sm={sm} md={md} key={name}>
             <Card matchHeight={true} accented={true} aggregated={true}>
-              <CardTitle>
+              <CardTitle className={cardTitleStyle}>
                 {name}
               </CardTitle>
-              <CardBody>
+              <CardBody className={cardBodyStyle}>
                 {this.renderStatuse(name)}
               </CardBody>
             </Card>

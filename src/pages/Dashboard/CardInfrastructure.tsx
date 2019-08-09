@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { style } from 'typestyle';
 import { InfraMetricsOptions } from '../../../src/types/MetricsOptions';
 import * as API from '../../services/Api';
 import { CancelablePromise, makeCancelablePromise } from '../../utils/CancelablePromises';
@@ -12,10 +13,17 @@ import {
   CardBody
 } from 'patternfly-react';
 import update from 'react-addons-update';
+import { DashboardPropType } from '../../types/Dashboard';
 
-type Props = {
-  name: string[];
-};
+const cardTitleStyle = style({ 
+  fontSize: '25px',
+  fontWeight: 600
+});
+
+const cardBodyStyle = style({
+  fontSize: '35px',
+  fontWeight: 'bold'
+});
 
 type State = {
   node: string[];
@@ -24,10 +32,10 @@ type State = {
   containerRunning: number;
 };
 
-class CardInfrastructure extends React.Component<Props, State> {
+class CardInfrastructure extends React.Component<DashboardPropType, State> {
   private metricsPromise?: CancelablePromise<Response<InfraMetrics>>;
 
-  constructor(props: Props) {
+  constructor(props: DashboardPropType) {
     super(props);
     this.state = {
       node: [],
@@ -39,7 +47,10 @@ class CardInfrastructure extends React.Component<Props, State> {
 
   componentWillMount() {
     this.load();
-    
+  }
+
+  componentDidMount(){
+    window.setInterval(this.load, 15000);
   }
 
   load = () => {
@@ -152,16 +163,16 @@ class CardInfrastructure extends React.Component<Props, State> {
   }
 
   render() {
-    const [xs, sm, md] = [12, 6, 3];
+    const [sm, md] = [12, 6];
     return (
       this.props.name.map(name => {
         return (
-          <Col xs={xs} sm={sm} md={md} key={name}>
+          <Col sm={sm} md={md} key={name}>
             <Card matchHeight={true} accented={true} aggregated={true}>
-              <CardTitle>
+              <CardTitle className={cardTitleStyle}>
                 {name}
               </CardTitle>
-              <CardBody>
+              <CardBody className={cardBodyStyle}>
                 {this.renderStatuse(name)}
               </CardBody>
             </Card>

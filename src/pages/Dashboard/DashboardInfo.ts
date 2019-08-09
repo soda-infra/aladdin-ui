@@ -1,8 +1,8 @@
 import { DashboardItem } from '../../types/DashboardCard';
-// jungeun
+
 export const cardItems: DashboardItem[] = [
   {
-    kind: 'Kubernetes Cluster',
+    kind: 'K8sCluster',
     title: ['Nodes', 'Namespace']
   },
   {
@@ -10,7 +10,7 @@ export const cardItems: DashboardItem[] = [
     title: ['Host', 'DockerContainer']
   },
   {
-    kind: 'Kubernetes Workloads',
+    kind: 'K8sWorkloads',
     title: ['Daemon Sets', 'Deployments', 'Replica Sets', 'Pods']
   },
   {

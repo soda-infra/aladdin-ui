@@ -93,6 +93,7 @@ export class OverviewPage extends React.Component<OverviewProps, State> {
   }
 
   load = () => {
+    console.log("load")
     this.promises.cancelAll();
     this.promises
       .register('namespaces', API.getNamespaces())

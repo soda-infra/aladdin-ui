@@ -8,7 +8,7 @@ import AppListPage from './pages/AppList/AppListPage';
 import AppDetailsPage from './pages/AppDetails/AppDetailsPage';
 import OverviewPageContainer from './pages/Overview/OverviewPage';
 // aladdin
-import DashboardPageContainer from './pages/DashBoard/DashboardPage';
+import DashboardPageContainer from './pages/Dashboard/DashboardPage';
 import { MenuItem, Path } from './types/Routes';
 import GraphPageContainer from './pages/Graph/GraphPage';
 import { icons, Paths } from './config';
