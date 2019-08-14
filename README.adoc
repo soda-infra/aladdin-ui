@@ -1,1 +1,12 @@
 ## Aladdin-ui
+
+### Quick Start
+
+    curl -sL https://deb.nodesource.com/setup_10.x | bash -
+    sudo apt-get install -y nodejs
+    sudo apt-get install gcc g++ make
+    npm install -g yarn
+    yarn
+    yarn start
+    
+A new browser window should automatically open. But, if it doesn’t then use: http://localhost:3000
