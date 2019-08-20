@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { style } from 'typestyle';
-import { InfraMetricsOptions } from '../../../src/types/MetricsOptions';
+import { InfraMetricsOptions } from '../../types/MetricsOptions';
 import * as API from '../../services/Api';
 import { CancelablePromise, makeCancelablePromise } from '../../utils/CancelablePromises';
 import { Response } from '../../services/Api';
@@ -14,10 +14,11 @@ import {
 } from 'patternfly-react';
 import update from 'react-addons-update';
 import { DashboardPropType } from '../../types/Dashboard';
+import { Link } from 'react-router-dom';
 
 const cardTitleStyle = style({ 
   fontSize: '25px',
-  fontWeight: 600
+  fontWeight: 1000
 });
 
 const cardBodyStyle = style({
@@ -32,7 +33,13 @@ type State = {
   namespaceTotal: number;
   namespaceActive: number;
 };
-
+/**
+ * CardK8sCluster: 클러스터에 관한 정보를 불러온다. 다음은 해당 정보를 불러올 때 사용하는 쿼리를 나타낸 것이다.
+ * - Node Total: 'kube_node_labels' (클러스터의 전체 노드의 수를 가져오기 위해 사용한다.)
+ * - Node Ready: 'kube_node_status_condition' (준비된 상태의 노드의 수를 가져오기 위해 사용한다.)
+ * - Namespace Total: 'kube_namespace_labels' (클러스터의 전체 네임스페이스의 수를 가져오기 위해 사용한다.)
+ * - Namespace Active: 'kube_namespace_status_phase' (사용중인 네임스페이스의 수를 가져오기 위해 사용한다.)
+ */
 class CardK8sCluster extends React.Component<DashboardPropType, State> {
   private metricsPromise?: CancelablePromise<Response<InfraMetrics>>;
 
@@ -50,19 +57,17 @@ class CardK8sCluster extends React.Component<DashboardPropType, State> {
     this.load();
   }
   
-  componentDidMount(){
+  componentDidMount() {
     window.setInterval(this.load, 15000);
   }
 
-  componentWillUpdate(){}
-  // kch TODO: filters 줄이기
   load = () => {
-    const optionsTotalnodes: InfraMetricsOptions = {
+    const optionsNodeTotal: InfraMetricsOptions = {
       filters: ['node_labels'],
     };
-    const infraprom = API.getInfraMetrics(optionsTotalnodes);
+    const promiseNodeTotal = API.getInfraMetrics(optionsNodeTotal);
     
-    this.metricsPromise = makeCancelablePromise(mergeInfraMetricsResponses([infraprom]));
+    this.metricsPromise = makeCancelablePromise(mergeInfraMetricsResponses([promiseNodeTotal]));
     this.metricsPromise.promise
     .then(response => {
       const metrics = response.data.metrics;
@@ -79,14 +84,14 @@ class CardK8sCluster extends React.Component<DashboardPropType, State> {
       });
     });
 
-    const optionsNodesState: InfraMetricsOptions = {
+    const optionsNode: InfraMetricsOptions = {
       filters: ['node_status_condition'],
       condition: 'Ready',
       status: 'true',
     };
 
-    const nodeState = API.getInfraMetrics(optionsNodesState);
-    this.metricsPromise = makeCancelablePromise(mergeInfraMetricsResponses([nodeState]));
+    const promiseNode = API.getInfraMetrics(optionsNode);
+    this.metricsPromise = makeCancelablePromise(mergeInfraMetricsResponses([promiseNode]));
     this.metricsPromise.promise
     .then(response => {
       const metrics = response.data.metrics;
@@ -106,47 +111,12 @@ class CardK8sCluster extends React.Component<DashboardPropType, State> {
       });
     });
 
-    // kch : 기존 문서와 다른 방법으로 쿼리를 보냄(위에선 2번 쿼리를 보내지만 아래의 코드는 1번만 보냄)
-    // const optionsNodesState: InfraMetricsOptions = {
-    //   filters: ['node_status_condition'],
-    //   condition: 'Ready',
-    //   status: 'true',
-    // };
-  
-    // const nodeState = API.getInfraMetrics(optionsNodesState);
-    // this.metricsPromise = makeCancelablePromise(mergeInfraMetricsResponses([nodeState]));
-    // this.metricsPromise.promise
-    // .then(response => {
-    //   const metrics = response.data.metrics;
-    //   let currentNode = 0;
-    //   for (let j = 0; j < metrics.node_status_condition.matrix.length; j++) {
-    //     if( metrics.node_status_condition.matrix[j].values.slice(-1)[0][1] == 1)
-    //       currentNode = currentNode + 1;
-    //   }
-    //   this.setState({
-    //     nodeReady: update(
-    //       this.state.nodeReady,
-    //       {
-    //         $set: currentNode
-    //       }
-    //     )
-    //   })
-    //   this.setState({
-    //     nodeTotal: update(
-    //       this.state.nodeTotal,
-    //       {
-    //         $set: metrics.node_status_condition.matrix.length
-    //       }
-    //     )
-    //   })
-    // });
-
-    const optionsNamespaceLabels: InfraMetricsOptions = {
+    const optionsNamespace: InfraMetricsOptions = {
       filters: ['namespace_labels'],
     };
-    const namespaceAllProm = API.getInfraMetrics(optionsNamespaceLabels);
+    const promiseNamespace = API.getInfraMetrics(optionsNamespace);
 
-    this.metricsPromise = makeCancelablePromise(mergeInfraMetricsResponses([namespaceAllProm]));
+    this.metricsPromise = makeCancelablePromise(mergeInfraMetricsResponses([promiseNamespace]));
     this.metricsPromise.promise
     .then(response => {
       const metrics = response.data.metrics;
@@ -164,9 +134,9 @@ class CardK8sCluster extends React.Component<DashboardPropType, State> {
       filters: ['namespace_status_phase'],
       phase: 'Active'
     };
-    const namespaceCurrentProm = API.getInfraMetrics(optionsNamespaceStatus);
+    const promiseNamespaceStatus = API.getInfraMetrics(optionsNamespaceStatus);
     
-    this.metricsPromise = makeCancelablePromise(mergeInfraMetricsResponses([namespaceCurrentProm]));
+    this.metricsPromise = makeCancelablePromise(mergeInfraMetricsResponses([promiseNamespaceStatus]));
     this.metricsPromise.promise
     .then(response => {
       const metrics = response.data.metrics;
@@ -195,10 +165,14 @@ class CardK8sCluster extends React.Component<DashboardPropType, State> {
           <Col sm={sm} md={md} key={name}>
             <Card matchHeight={true} accented={true} aggregated={true}>
               <CardTitle className={cardTitleStyle}>
-                {name}
+                <Link to={`/kubernetes/${encodeURIComponent(name.replace(/ +/g, '').toLowerCase())}`}>
+                  {name}
+                </Link>
               </CardTitle>
               <CardBody className={cardBodyStyle}>
-                {this.renderStatuse(name)}
+                <Link to={`/kubernetes/${encodeURIComponent(name.replace(/ +/g, '').toLowerCase())}`}>
+                  {this.renderStatuse(name)}
+                </Link>
               </CardBody>
             </Card>
           </Col>
@@ -211,7 +185,7 @@ class CardK8sCluster extends React.Component<DashboardPropType, State> {
     if ( name === 'Nodes') {
       return this.state.nodeReady + '/' + this.state.nodeTotal;
     } 
-    if ( name === 'Namespace') {
+    if ( name === 'Namespaces') {
        return this.state.namespaceActive + '/' + this.state.namespaceTotal;
     }
     return ;

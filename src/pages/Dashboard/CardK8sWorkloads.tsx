@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { style } from 'typestyle';
-import { InfraMetricsOptions } from '../../../src/types/MetricsOptions';
+import { InfraMetricsOptions } from '../../types/MetricsOptions';
 import * as API from '../../services/Api';
 import { CancelablePromise, makeCancelablePromise } from '../../utils/CancelablePromises';
 import { Response } from '../../services/Api';
@@ -14,6 +14,7 @@ import {
 } from 'patternfly-react';
 import update from 'react-addons-update';
 import { DashboardPropType } from '../../types/Dashboard';
+import { Link } from 'react-router-dom';
 
 const cardTitleStyle = style({ 
   fontSize: '25px',
@@ -36,7 +37,15 @@ type State = {
   podTotal: number;
   podReady: number;
 };
-
+/**
+ * CardK8sWorkloads: 워크로드에 관한 정보를 불러온다. 다음은 해당 정보를 불러올 때 사용하는 쿼리를 나타낸 것이다.
+ * - Daemon Set Total: 'kube_daemonset_labels' (전체 데몬 셋을 가져오기 위해 사용한다.)
+ * - Daemon Set Ready: 'kube_daemonset_labels', 'kube_deployment_status_replicas', 'kube_deployment_status_replicas_available' (현재 사용중인 데몬 셋을 가져오기 위해 사용한다.)
+ * - Deployment Total: 'kube_deployment_labels' (전체 디플로이먼트를 가져오기 위해 사용한다.)
+ * - Deployment Ready: 'kube_deployment_labels', 'kube_deployment_status_replicas', 'kube_deployment_status_replicas_available' (현재 사용중인 디플로이먼트를 가져오기 위해 사용한다.)
+ * - Replica Set Total: 'kube_replicaset_labels' (전체 레플리카 셋을 가져오기 위해 사용한다.)
+ * - Replica Set Ready: 'kube_replicaset_labels', 'kube_replicaset_status_replicas', 'kube_deployment_status_replicas_available' (현재 사용중인 레플리카 셋을 가져오기 위해 사용한다.)
+ */
 class CardK8sWorkloads extends React.Component<DashboardPropType, State> {
   private metricsPromise?: CancelablePromise<Response<InfraMetrics>>;
 
@@ -58,17 +67,13 @@ class CardK8sWorkloads extends React.Component<DashboardPropType, State> {
     this.load();
   }
 
-  componentDidMount(){
-    window.setInterval(this.load, 15000);
-  }
-
   load = () => {
-    const optionsDaemonSetsTotal: InfraMetricsOptions = {
+    const optionsDaemonSetTotal: InfraMetricsOptions = {
       filters: ['daemonset_labels'],
     };
-    const daemonSetTotalProm = API.getInfraMetrics(optionsDaemonSetsTotal);
+    const promiseDaemonSetTotal = API.getInfraMetrics(optionsDaemonSetTotal);
     
-    this.metricsPromise = makeCancelablePromise(mergeInfraMetricsResponses([daemonSetTotalProm]));
+    this.metricsPromise = makeCancelablePromise(mergeInfraMetricsResponses([promiseDaemonSetTotal]));
     this.metricsPromise.promise
     .then(response => {
       const metrics = response.data.metrics;
@@ -82,12 +87,12 @@ class CardK8sWorkloads extends React.Component<DashboardPropType, State> {
       });
     });
 
-    const optionsDaemonSetsReady: InfraMetricsOptions = {
+    const optionsDaemonSetReady: InfraMetricsOptions = {
       filters: ['daemonset_unavailable']
     };
-    const daemonSetReadyProm = API.getInfraMetrics(optionsDaemonSetsReady);
+    const promiseDaemonSetReady = API.getInfraMetrics(optionsDaemonSetReady);
 
-    this.metricsPromise = makeCancelablePromise(mergeInfraMetricsResponses([daemonSetReadyProm]));
+    this.metricsPromise = makeCancelablePromise(mergeInfraMetricsResponses([promiseDaemonSetReady]));
     this.metricsPromise.promise
     .then(response => {
       const metrics = response.data.metrics;
@@ -107,12 +112,12 @@ class CardK8sWorkloads extends React.Component<DashboardPropType, State> {
       });
     });
 
-    const optionsDeploymentsTotal: InfraMetricsOptions = {
+    const optionsDeploymentTotal: InfraMetricsOptions = {
       filters: ['deployment_labels'],
     };
-    const deploymentTotalProm = API.getInfraMetrics(optionsDeploymentsTotal);
+    const promiseDeploymentTotal = API.getInfraMetrics(optionsDeploymentTotal);
     
-    this.metricsPromise = makeCancelablePromise(mergeInfraMetricsResponses([deploymentTotalProm]));
+    this.metricsPromise = makeCancelablePromise(mergeInfraMetricsResponses([promiseDeploymentTotal]));
     this.metricsPromise.promise
     .then(response => {
       const metrics = response.data.metrics;
@@ -129,9 +134,9 @@ class CardK8sWorkloads extends React.Component<DashboardPropType, State> {
     const optionsDeploymentReady: InfraMetricsOptions = {
       filters: ['deployment_labels', 'deployment_status_replicas', 'deployment_status_replicas_available']
     };
-    const deploymentReadyProm = API.getInfraMetrics(optionsDeploymentReady);
+    const promiseDeploymentReady = API.getInfraMetrics(optionsDeploymentReady);
 
-    this.metricsPromise = makeCancelablePromise(mergeInfraMetricsResponses([deploymentReadyProm]));
+    this.metricsPromise = makeCancelablePromise(mergeInfraMetricsResponses([promiseDeploymentReady]));
     this.metricsPromise.promise
     .then(response => {
       const metrics = response.data.metrics;
@@ -156,9 +161,9 @@ class CardK8sWorkloads extends React.Component<DashboardPropType, State> {
     const optionsReplicaSetTotal: InfraMetricsOptions = {
       filters: ['replicaset_labels'],
     };
-    const replicaSetTotalProm = API.getInfraMetrics(optionsReplicaSetTotal);
+    const promiseReplicaSetTotal = API.getInfraMetrics(optionsReplicaSetTotal);
     
-    this.metricsPromise = makeCancelablePromise(mergeInfraMetricsResponses([replicaSetTotalProm]));
+    this.metricsPromise = makeCancelablePromise(mergeInfraMetricsResponses([promiseReplicaSetTotal]));
     this.metricsPromise.promise
     .then(response => {
       const metrics = response.data.metrics;
@@ -175,9 +180,9 @@ class CardK8sWorkloads extends React.Component<DashboardPropType, State> {
     const optionsReplicaSetReady: InfraMetricsOptions = {
       filters: ['replicaset_labels', 'replicaset_status_replicas', 'deployment_status_replicas_available'],
     };
-    const replicaSetReadyProm = API.getInfraMetrics(optionsReplicaSetReady);
+    const promiseReplicaSetReady = API.getInfraMetrics(optionsReplicaSetReady);
     
-    this.metricsPromise = makeCancelablePromise(mergeInfraMetricsResponses([replicaSetReadyProm]));
+    this.metricsPromise = makeCancelablePromise(mergeInfraMetricsResponses([promiseReplicaSetReady]));
     this.metricsPromise.promise
     .then(response => {
       const metrics = response.data.metrics;
@@ -208,12 +213,12 @@ class CardK8sWorkloads extends React.Component<DashboardPropType, State> {
       });
     });
 
-    const optionsPodsTotal: InfraMetricsOptions = {
+    const optionsPodTotal: InfraMetricsOptions = {
       filters: ['pod_labels'],
     };
-    const podTotalProm = API.getInfraMetrics(optionsPodsTotal);
+    const promisePodTotal = API.getInfraMetrics(optionsPodTotal);
     
-    this.metricsPromise = makeCancelablePromise(mergeInfraMetricsResponses([podTotalProm]));
+    this.metricsPromise = makeCancelablePromise(mergeInfraMetricsResponses([promisePodTotal]));
     this.metricsPromise.promise
     .then(response => {
       const metrics = response.data.metrics;
@@ -231,9 +236,9 @@ class CardK8sWorkloads extends React.Component<DashboardPropType, State> {
       filters: ['pod_status_phase'],
       phase: 'Running',
     };
-    const podReadyProm = API.getInfraMetrics(optionsPodReady);
+    const promisePodReady = API.getInfraMetrics(optionsPodReady);
     
-    this.metricsPromise = makeCancelablePromise(mergeInfraMetricsResponses([podReadyProm]));
+    this.metricsPromise = makeCancelablePromise(mergeInfraMetricsResponses([promisePodReady]));
     this.metricsPromise.promise
     .then(response => {
       const metrics = response.data.metrics;
@@ -257,10 +262,14 @@ class CardK8sWorkloads extends React.Component<DashboardPropType, State> {
           <Col sm={sm} md={md} key={name}>
             <Card matchHeight={true} accented={true} aggregated={true}>
               <CardTitle className={cardTitleStyle}>
-                {name}
+                <Link to={`/kubernetes/${encodeURIComponent(name.replace(/ +/g, '').toLowerCase())}`}>
+                  {name}
+                </Link>
               </CardTitle>
               <CardBody className={cardBodyStyle}>
-                {this.renderStatuse(name)}
+                <Link to={`/kubernetes/${encodeURIComponent(name.replace(/ +/g, '').toLowerCase())}`}>
+                  {this.renderStatuse(name)} 
+                </Link>
               </CardBody>
             </Card>
           </Col>
