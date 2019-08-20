@@ -7,9 +7,17 @@ import WorkloadDetailsPage from './pages/WorkloadDetails/WorkloadDetailsPage';
 import AppListPage from './pages/AppList/AppListPage';
 import AppDetailsPage from './pages/AppDetails/AppDetailsPage';
 import OverviewPageContainer from './pages/Overview/OverviewPage';
-// aladdin
+import InfrastructurePageContainer from './pages/Infrastructure/InfrastructurePage';
 import DashboardPageContainer from './pages/Dashboard/DashboardPage';
-import { MenuItem, Path } from './types/Routes';
+
+import NodesDetailContainer from './pages/Dashboard/NodeDetail';
+import NamespaceDetailContainer from './pages/Dashboard/NamespaceDetail';
+import DaemonsetDetailContainer from './pages/Dashboard/DaemonsetDetail';
+import DeploymentDetailContainer from './pages/Dashboard/DeployDetail';
+import ReplicasetDetailContainer from './pages/Dashboard/ReplicasetDetail';
+import PodDetailContainer from './pages/Dashboard/PodDetail';
+
+import { MenuItem, Path, GroupId } from './types/Routes';
 import GraphPageContainer from './pages/Graph/GraphPage';
 import { icons, Paths } from './config';
 import ServiceDetailsPageContainer from './pages/ServiceDetails/ServiceDetailsPage';
@@ -21,17 +29,24 @@ import DefaultSecondaryMasthead from './components/DefaultSecondaryMasthead/Defa
  */
 const navItems: MenuItem[] = [
   {
-    iconClass: icons.menu.overview,
-    title: 'Overview',
-    to: '/overview',
-    pathsActive: [/^\/overview\/(.*)/]
+    iconClass: icons.menu.dashboard,
+    title: 'Infrastructure',
+    to: '/' + Paths.INFRASTRUCTURE + '/overview',
+    pathsActive: [/^\/infrastructure\/(.*)/],
+    groupId: GroupId.INFRASTRUCTURE
   },
-  // aladdin
   {
     iconClass: icons.menu.dashboard,
-    title: 'Dashboard',
-    to: '/dashboard',
-    pathsActive: [/^\/dashboard\/(.*)/]
+    title: 'Kubernetes',
+    to: '/' + Paths.KUBERNETES + '/overview',
+    pathsActive: [new RegExp('^/' + Paths.KUBERNETES + '/(.*)')],
+    groupId: GroupId.KUBERNETES
+  },
+  {
+    iconClass: icons.menu.network,
+    title: 'Network',
+    to: '/network',
+    pathsActive: [/^\/network\/(.*)/]
   },
   {
     iconClass: icons.menu.graph,
@@ -70,17 +85,95 @@ const navItems: MenuItem[] = [
   }
 ];
 
-const defaultRoute = '/overview';
+const subItems: MenuItem[] = [
+  {
+    iconClass: icons.menu.dashboard,
+    title: 'Overview',
+    to: '/' + Paths.INFRASTRUCTURE + '/overview',
+    groupId: GroupId.INFRASTRUCTURE
+  },
+  {
+    iconClass: icons.menu.dashboard,
+    title: 'Overview',
+    to: '/' + Paths.KUBERNETES + '/overview',
+    groupId: GroupId.KUBERNETES
+  },
+  {
+    iconClass: icons.menu.dashboard,
+    title: 'Nodes',
+    to: '/' + Paths.KUBERNETES + '/nodes',
+    groupId: GroupId.KUBERNETES
+  },
+  {
+    iconClass: icons.menu.dashboard,
+    title: 'Namespace',
+    to: '/' + Paths.KUBERNETES + '/namespaces',
+    groupId: GroupId.KUBERNETES
+  },
+  {
+    iconClass: icons.menu.dashboard,
+    title: 'Daemonset',
+    to: '/' + Paths.KUBERNETES + '/daemonsets',
+    groupId: GroupId.KUBERNETES
+  },
+  {
+    iconClass: icons.menu.dashboard,
+    title: 'Deployment',
+    to: '/' + Paths.KUBERNETES + '/deployments',
+    groupId: GroupId.KUBERNETES
+  },
+  {
+    iconClass: icons.menu.dashboard,
+    title: 'Replicaset',
+    to: '/' + Paths.KUBERNETES + '/replicasets',
+    groupId: GroupId.KUBERNETES
+  },
+  {
+    iconClass: icons.menu.dashboard,
+    title: 'Pod',
+    to: '/' + Paths.KUBERNETES + '/pods',
+    groupId: GroupId.KUBERNETES
+  },
+];
+
+const defaultRoute = '/infrastructure/overview';
 
 const pathRoutes: Path[] = [
   {
-    path: '/overview',
-    component: OverviewPageContainer
+    path: '/' + Paths.INFRASTRUCTURE,
+    component: InfrastructurePageContainer
   },
-  // aladdin
   {
-    path: '/dashboard',
+    path: '/' + Paths.KUBERNETES + '/nodes',
+    component: NodesDetailContainer
+  },
+  {
+    path: '/' + Paths.KUBERNETES + '/namespaces',
+    component: NamespaceDetailContainer
+  },
+  {
+    path: '/' + Paths.KUBERNETES + '/daemonsets',
+    component: DaemonsetDetailContainer
+  },
+  {
+    path: '/' + Paths.KUBERNETES + '/deployments',
+    component: DeploymentDetailContainer
+  },
+  {
+    path: '/' + Paths.KUBERNETES + '/replicasets',
+    component: ReplicasetDetailContainer
+  },
+  {
+    path: '/' + Paths.KUBERNETES + '/pods',
+    component: PodDetailContainer
+  },
+  {
+    path: '/' + Paths.KUBERNETES,
     component: DashboardPageContainer
+  },
+  {
+    path: '/network',
+    component: OverviewPageContainer
   },
   {
     path: '/graph/node/namespaces/:namespace/' + Paths.APPLICATIONS + '/:app/versions/:version',
@@ -172,4 +265,4 @@ const secondaryMastheadRoutes: Path[] = [
   }
 ];
 
-export { defaultRoute, navItems, pathRoutes, secondaryMastheadRoutes };
+export { defaultRoute, navItems, subItems, pathRoutes, secondaryMastheadRoutes };

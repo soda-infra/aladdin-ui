@@ -1,4 +1,4 @@
-import { MetricsQuery, InfraMetricsQuery } from 'k-charted-react';
+import { MetricsQuery } from 'k-charted-react';
 
 export interface IstioMetricsOptions extends MetricsQuery {
   direction: Direction;
@@ -7,8 +7,11 @@ export interface IstioMetricsOptions extends MetricsQuery {
   reporter: Reporter;
 }
 
-// aladdin
-export interface InfraMetricsOptions extends InfraMetricsQuery {
+export interface InfraMetricsOptions {
+  rateInterval?: string;
+  rateFunc?: string;
+  avg?: boolean;
+  byLabels?: string[];
   filters?: string[];
   condition?: string;
   status?: string;

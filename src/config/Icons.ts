@@ -9,8 +9,8 @@ const mutIcons = {
     virtualService: { type: 'fa', name: 'code-fork', ascii: '\uf126 ' }
   },
   menu: {
-    overview: 'fa fa-tachometer',
-    dashboard: 'fa fa-tachometer',  // aladdin
+    network: 'fa fa-tachometer',
+    dashboard: 'fa fa-tachometer',
     graph: 'fa pficon-topology',
     applications: 'fa pficon-applications',
     workloads: 'fa pficon-bundle',
