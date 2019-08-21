@@ -169,10 +169,19 @@ class CardPod extends React.Component<DashboardPropType, State> {
           if (podMemLists.length > 2) {
             break;
           }
-          podMemLists.push({
-            name: allPodMemLists[i][0],
-            value: allPodMemLists[i][1] / clusterTotalMemory
-          });
+
+          if (clusterTotalMemory != 0) {
+            podMemLists.push({
+              name: allPodMemLists[i][0],
+              value: allPodMemLists[i][1] / clusterTotalMemory
+            });
+          }
+          else {
+            podMemLists.push({
+              name: allPodMemLists[i][0],
+              value: 0
+            });
+          }
         }
 
         if (!this.state.loading) {
@@ -282,23 +291,23 @@ class CardPod extends React.Component<DashboardPropType, State> {
               exitDelay={10}
               content={
                 <div>
-                  Pod on {nodeObject[element.name]}<br/>
-                  Pod Ip: {ipObject[element.name]}<br/>
-                  Pod Namespace: {namespaceObject[element.name]}<br/>
+                  Pod on {nodeObject[element.name]}<br />
+                  Pod Ip: {ipObject[element.name]}<br />
+                  Pod Namespace: {namespaceObject[element.name]}<br />
                 </div>
               }
             >
-            <UtilizationBar
-              min={0}
-              max={100}
-              now={element.value.toFixed(2)}
-              thresholdWarning={40}
-              thresholdError={70}
-              descriptionPlacementTop={true}
-              description={namespaceObject[element.name]}
-              label={element.name}
-              key={name}
-            />
+              <UtilizationBar
+                min={0}
+                max={100}
+                now={element.value.toFixed(2)}
+                thresholdWarning={40}
+                thresholdError={70}
+                descriptionPlacementTop={true}
+                description={namespaceObject[element.name]}
+                label={element.name}
+                key={name}
+              />
             </Tooltip>
           );
         })
@@ -314,23 +323,23 @@ class CardPod extends React.Component<DashboardPropType, State> {
               exitDelay={10}
               content={
                 <div>
-                  Pod on {nodeObject[element.name]}<br/>
-                  Pod Ip: {ipObject[element.name]}<br/>
-                  Pod Namespace: {namespaceObject[element.name]}<br/>
+                  Pod on {nodeObject[element.name]}<br />
+                  Pod Ip: {ipObject[element.name]}<br />
+                  Pod Namespace: {namespaceObject[element.name]}<br />
                 </div>
               }
             >
-            <UtilizationBar
-              min={0}
-              max={100}
-              now={element.value.toFixed(2)}
-              thresholdWarning={40}
-              thresholdError={70}
-              descriptionPlacementTop={true}
-              description={namespaceObject[element.name]}
-              label={element.name}
-              key={name}
-            />
+              <UtilizationBar
+                min={0}
+                max={100}
+                now={element.value.toFixed(2)}
+                thresholdWarning={40}
+                thresholdError={70}
+                descriptionPlacementTop={true}
+                description={namespaceObject[element.name]}
+                label={element.name}
+                key={name}
+              />
             </Tooltip>
           );
         })

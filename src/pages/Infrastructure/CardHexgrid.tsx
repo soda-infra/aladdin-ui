@@ -194,7 +194,7 @@ class CardHexgrid extends React.Component<DashboardPropType, State> {
           if (cpuMetrics[i].metric.container_name && cpuMetrics[i].metric.container_name !== 'POD') {
             for (let j = 0; j < nodeNameLists.length; j++) {
               if (nodeNameLists[j][0] === cpuMetrics[i].metric.kubernetes_io_hostname) {
-                nodeNameLists[j][1].push([cpuMetrics[i].metric.container_name, cpuMetrics[i].values.slice(-1)[0][1]]);
+                nodeNameLists[j][1].push([cpuMetrics[i].metric.container_name, cpuMetrics[i].values.slice(-1)[0][1] * 100]);
                 break;
               }
             }
@@ -265,7 +265,7 @@ class CardHexgrid extends React.Component<DashboardPropType, State> {
     } else if (param === 'container') {
       this.state.cpuInfo[index][1].map((container, i) => {
         if (i === Number(source._reactInternalFiber.key)) {
-          mousePointLists.push(container[0] + ' : ' + ((container[1] / this.state.cpuTotal[index]) * 100).toFixed(2) + '%');
+          mousePointLists.push(container[0] + ' : ' + (container[1]).toFixed(2) + '%');
         }
       });
     }
@@ -324,7 +324,7 @@ class CardHexgrid extends React.Component<DashboardPropType, State> {
                         <Layout size={{ x: size, y: size }} flat={false} spacing={1.02} origin={{ x: 0, y: 0 }}>
                           {
                             moreHexas.map((hex, i) =>
-                              <a data-tip={true} data-for={cpu[1][0][0]} key={name}>
+                              <a data-tip={true} data-for={'container'} key={name}>
                                 {value[i] <= 30 ?
                                   <Hexagon fill={'00' + (Number('0x8800') + value[i] * 0x200).toString(16)} key={i} q={hex.q} r={hex.r} s={hex.s} onMouseLeave={(e, h) => this.onMouseLeave(e, h)} onMouseEnter={(e, h) => this.onMouseEnter('container', index, e, h)} />
                                   : value[i] <= 60 ? <Hexagon fill={(Number('0xfff55a') - (value[i] - 30) * 0x300).toString(16)} key={i} q={hex.q} r={hex.r} s={hex.s} onMouseLeave={(e, h) => this.onMouseLeave(e, h)} onMouseEnter={(e, h) => this.onMouseEnter('container', index, e, h)} />
@@ -337,7 +337,7 @@ class CardHexgrid extends React.Component<DashboardPropType, State> {
                       </Link>
                     </HexGrid>
                   </div>
-                  <ReactTooltip id={cpu[1][0][0]} effect="solid" type="info">
+                  <ReactTooltip id={'container'} effect="solid" type="info">
                     {this.state.mousePoint[0]}
                   </ReactTooltip>
                 </CardBody>
