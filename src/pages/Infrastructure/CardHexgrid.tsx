@@ -351,7 +351,7 @@ class CardHexgrid extends React.Component<DashboardPropType, State> {
 
   renderInfraStatuse() {
     const length = this.state.node.length;
-    const size = 25 / Math.sqrt(length);
+    const size = 90 / Math.sqrt(length);
     const boxSize = this.setHexagonSize(length) * Number(Math.sqrt((length - 1) / 3));
     const viewbox = '-' + boxSize * 1.5 + ' -' + boxSize * 1.5 + ' ' + boxSize * 3 + ' ' + boxSize * 3;
     const moreHexas = GridGenerator.hexagon_aladdin(length);
@@ -394,7 +394,7 @@ class CardHexgrid extends React.Component<DashboardPropType, State> {
     let hexagonSize;
 
     if (length < 8) {
-      hexagonSize = 40;
+      hexagonSize = 200;
     } else if (length < 20) {
       hexagonSize = 50;
     } else if (length < 38) {

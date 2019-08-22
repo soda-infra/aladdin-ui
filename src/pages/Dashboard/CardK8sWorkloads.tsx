@@ -280,7 +280,7 @@ class CardK8sWorkloads extends React.Component<DashboardPropType, State> {
 
   renderStatuse(name: String) {
     if ( name === 'Daemon Sets') {
-      return this.state.daemonSetReady + '/' + this.state.daemonSetTotal;
+      return this.state.daemonSetTotal - this.state.daemonSetReady + '/' + this.state.daemonSetTotal;
     } else if ( name === 'Deployments') {
        return this.state.deploymentReady + '/' + this.state.deploymentTotal;
     } else if (name === 'Replica Sets') {

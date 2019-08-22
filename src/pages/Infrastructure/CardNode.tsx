@@ -84,7 +84,7 @@ class CardNode extends React.Component<DashboardPropType, State> {
       .then(response => {
         const metrics = response.data.metrics;
         const nodes = metrics.node_cpu_seconds_total.matrix;
-        nodeCPULists.sort((a, b) => b[1] - a[1]);
+
         for (let i = 0; i < nodes.length; i++) {
           if (nodeCPULists.length > 3) {
             break;
@@ -94,6 +94,7 @@ class CardNode extends React.Component<DashboardPropType, State> {
             value: 100 - Number(nodes[i].values.slice(-1)[0][1]) * 100
           });
         }
+        this.sortMetric(nodeCPULists);
 
         if (!this.state.loading) {
           this.setState({
@@ -118,7 +119,7 @@ class CardNode extends React.Component<DashboardPropType, State> {
       });
 
     const allNodeMemoryLists: Array<object> = [];
-    let nodeMemoryLists: Array<object> = [];
+    const nodeMemoryLists: Array<object> = [];
     const optionsNodeMemory: InfraMetricsOptions = {
       filters: ['node_memory_MemFree_bytes', 'node_memory_Cached_bytes', 'node_memory_Buffers_bytes', 'node_memory_MemTotal_bytes'],
     };
@@ -133,32 +134,37 @@ class CardNode extends React.Component<DashboardPropType, State> {
           metrics.node_memory_Buffers_bytes.matrix,
           metrics.node_memory_MemTotal_bytes.matrix,
         ];
-        const array: Array<Array<object>> = [];
+        const array: Array<object> = [];
 
         for (let i = 0; i < querys.length; ++i) {
+          const tmpArray: Array<object> = [];
           querys[i].map((node) => {
-            nodeMemoryLists.push([
-              node.metric.instance,
-              Number(node.values.slice(-1)[0][1])
-            ]);
+            tmpArray.push({
+              ip: node.metric.instance,
+              value: Number(node.values.slice(-1)[0][1])
+            });
           });
-          array.push(nodeMemoryLists);
-          nodeMemoryLists = [];
+          array.push(tmpArray);
         }
 
         for (let i = 0; i < querys[0].length; i++) {
-          const value = 100 - (Number(array[0][i][1]) + Number(array[1][i][1]) + Number(array[2][i][1])) / array[3][i][1] * 100;
-          allNodeMemoryLists.push([querys[0][i].metric.instance, value]);
+          const value = 100 - (Number(array[0][i].value) + Number(array[1][i].value) + Number(array[2][i].value)) / array[3][i].value * 100;
+          allNodeMemoryLists.push({
+            ip: array[0][i].ip,
+            value: value
+          });
         }
 
-        allNodeMemoryLists.sort((a, b) => b[1] - a[1]);
+        this.sortMetric(allNodeMemoryLists);
         for (let i = 0; i < querys[0].length; ++i) {
+          const ip = 'ip';
+          const value = 'value';
           if (nodeMemoryLists.length > 3) {
             break;
           }
           nodeMemoryLists.push({
-            ip: allNodeMemoryLists[i][0].split(':')[0],
-            value: allNodeMemoryLists[i][1]
+            ip: allNodeMemoryLists[i][ip].split(':')[0],
+            value: allNodeMemoryLists[i][value]
           });
         }
 
@@ -250,7 +256,7 @@ class CardNode extends React.Component<DashboardPropType, State> {
     this.state.nodeInfo.map(node => {
       nodeObject[node.ip] = node.name;
     });
-    
+
     if (name === 'Node Top CPU') {
       return (
         this.state.cpu.map(element => {
@@ -292,5 +298,10 @@ class CardNode extends React.Component<DashboardPropType, State> {
     return;
   }
 
+  private sortMetric = (metrics) => {
+    metrics.sort((a, b) => {
+      return (a.value > b.value) ? -1 : (a.value < b.value) ? 1 : 0;
+    });
+  }
 }
 export default CardNode;

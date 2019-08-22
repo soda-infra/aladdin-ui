@@ -290,7 +290,7 @@ class CardPod extends React.Component<DashboardPropType, State> {
               content={
                 <div>
                   Pod on {nodeObject[element.name]}<br />
-                  Pod Ip: {ipObject[element.name]}<br />
+                  Pod IP: {ipObject[element.name]}<br />
                   Pod Namespace: {namespaceObject[element.name]}<br />
                 </div>
               }
@@ -322,7 +322,7 @@ class CardPod extends React.Component<DashboardPropType, State> {
               content={
                 <div>
                   Pod on {nodeObject[element.name]}<br />
-                  Pod Ip: {ipObject[element.name]}<br />
+                  Pod IP: {ipObject[element.name]}<br />
                   Pod Namespace: {namespaceObject[element.name]}<br />
                 </div>
               }
