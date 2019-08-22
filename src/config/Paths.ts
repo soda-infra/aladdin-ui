@@ -1,11 +1,13 @@
 /**
  * Paths
  */
-
 export enum Paths {
+  INFRASTRUCTURE = 'infrastructure',
+  KUBERNETES = 'kubernetes',
   APPLICATIONS = 'applications',
-  SERVICES = 'services',
-  WORKLOADS = 'workloads',
   ISTIO = 'istio',
-  JAEGER = 'jaeger'
+  JAEGER = 'jaeger',
+  SERVICES = 'services',
+  SERVICEENTRIES = 'istio/serviceentries',
+  WORKLOADS = 'workloads'
 }

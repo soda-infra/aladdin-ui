@@ -20,7 +20,9 @@
     "noUnusedParameters": true,
     "suppressImplicitAnyIndexErrors": true,
     "allowSyntheticDefaultImports": true,
-    "tsBuildInfoFile": ".tsbuildinfo"
+    "tsBuildInfoFile": ".tsbuildinfo",
+    // benjykim
+    "resolveJsonModule": true
   },
   "exclude": [
     "node_modules",

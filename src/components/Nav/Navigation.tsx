@@ -13,6 +13,7 @@ import { kialiLogo, serverConfig } from '../../config';
 import { KialiAppState } from '../../store/Store';
 import { KialiAppAction } from '../../actions/KialiAppAction';
 import UserSettingsThunkActions from '../../actions/UserSettingsThunkActions';
+import { Link } from 'react-router-dom';
 
 type PropsType = RouteComponentProps & {
   navCollapsed: boolean;
@@ -91,13 +92,13 @@ class Navigation extends React.Component<PropsType, NavigationState> {
     const { isNavOpenDesktop, isNavOpenMobile, isMobileView } = this.state;
 
     const Header = (
-      <PageHeader
-        logo={<Brand src={kialiLogo} alt="Kiali Logo" />}
-        toolbar={<Masthead />}
-        showNavToggle={true}
-        onNavToggle={isMobileView ? this.onNavToggleMobile : this.onNavToggleDesktop}
-        isNavOpen={isMobileView ? isNavOpenMobile : isNavOpenDesktop || !this.props.navCollapsed}
-      />
+        <PageHeader
+          logo={<Link to={''}><Brand src={kialiLogo} alt="Kiali Logo" /></Link>}
+          toolbar={<Masthead />}
+          showNavToggle={true}
+          onNavToggle={isMobileView ? this.onNavToggleMobile : this.onNavToggleDesktop}
+          isNavOpen={isMobileView ? isNavOpenMobile : isNavOpenDesktop || !this.props.navCollapsed}
+        />
     );
 
     const Sidebar = (

@@ -5,6 +5,10 @@ export interface Metrics {
   histograms: { [key: string]: Histogram };
 }
 
+export interface InfraMetrics {
+  metrics: { [key: string]: MetricGroup };
+}
+
 export type Histogram = { [key: string]: MetricGroup };
 
 export interface MetricGroup {
