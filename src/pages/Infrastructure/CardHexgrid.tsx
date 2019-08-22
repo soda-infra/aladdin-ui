@@ -265,7 +265,7 @@ class CardHexgrid extends React.Component<DashboardPropType, State> {
     } else if (param === 'container') {
       this.state.cpuInfo[index][1].map((container, i) => {
         if (i === Number(source._reactInternalFiber.key)) {
-          mousePointLists.push(container[0] + ' : ' + (container[1]).toFixed(2) + '%');
+          mousePointLists.push(container[0] + ' : ' + container[1].toFixed(2) + '%');
         }
       });
     }

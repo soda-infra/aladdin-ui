@@ -169,14 +169,12 @@ class CardPod extends React.Component<DashboardPropType, State> {
           if (podMemLists.length > 2) {
             break;
           }
-
-          if (clusterTotalMemory != 0) {
+          if (clusterTotalMemory !== 0) {
             podMemLists.push({
               name: allPodMemLists[i][0],
               value: allPodMemLists[i][1] / clusterTotalMemory
             });
-          }
-          else {
+          } else {
             podMemLists.push({
               name: allPodMemLists[i][0],
               value: 0

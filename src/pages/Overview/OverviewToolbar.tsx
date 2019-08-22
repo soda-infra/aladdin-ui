@@ -120,7 +120,6 @@ export class OverviewToolbar extends React.Component<Props, State> {
   };
 
   render() {
-    console.log("abc")
     return (
       <StatefulFilters initialFilters={Filters.availableFilters} onFilterChange={this.props.onRefresh}>
         <Sort style={{ ...ThinStyle }}>
