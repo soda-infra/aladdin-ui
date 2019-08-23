@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { InfraMetrics } from '../../types/Metrics';
-import { GridGenerator, HexGrid, Layout, Hexagon } from 'react-hexgrid';
+import { GridGenerator, HexGrid, Layout, Hexagon } from 's-react-hexgrid';
 import '../../styles/App.css';
 import ReactTooltip from 'react-tooltip';
 import { style } from 'typestyle';
