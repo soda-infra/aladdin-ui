@@ -4,7 +4,6 @@
 
 기존 kiali의 종속성을 아래와 같이 변경함.
 
-    k-charted-react -> s-charted-react
     react-hexgrid -> s-react-hexgrid
 
 ### Quick Start
