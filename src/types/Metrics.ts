@@ -1,4 +1,4 @@
-import { LabelDisplayName, SingleLabelValues } from 's-charted-react';
+import { LabelDisplayName, SingleLabelValues } from 'k-charted-react';
 
 export interface Metrics {
   metrics: { [key: string]: MetricGroup };

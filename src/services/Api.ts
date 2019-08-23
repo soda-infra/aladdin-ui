@@ -1,5 +1,5 @@
 import axios, { AxiosError } from 'axios';
-import { DashboardModel, DashboardQuery } from 's-charted-react';
+import { DashboardModel, DashboardQuery } from 'k-charted-react';
 
 import Namespace from '../types/Namespace';
 import { IstioMetricsOptions, InfraMetricsOptions } from '../types/MetricsOptions';

@@ -8,7 +8,7 @@ import {
   AllPromLabelsValues,
   PromLabel,
   MetricsQuery
-} from 's-charted-react';
+} from 'k-charted-react';
 
 import { MetricsSettingsDropdown, MetricsSettings } from '../MetricsOptions/MetricsSettings';
 import MetricsDuration from '../MetricsOptions/MetricsDuration';
