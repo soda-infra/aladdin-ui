@@ -1,4 +1,4 @@
-import { MetricsQuery } from 'k-charted-react';
+import { MetricsQuery } from 's-charted-react';
 
 export interface IstioMetricsOptions extends MetricsQuery {
   direction: Direction;
